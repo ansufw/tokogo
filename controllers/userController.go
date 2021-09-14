@@ -14,7 +14,7 @@ func CreateUserController(c echo.Context) error {
 	if err := c.Bind(userInput); err != nil {
 		return err
 	}
-	user, err := database.CreateUser(userInput)
+	user, err := database.Signup(userInput)
 	if err != nil {
 		return err
 	}
@@ -42,5 +42,21 @@ func GetUserController(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]interface{}{
 		"message": "success get user data",
 		"data":    user,
+	})
+}
+
+func LoginUserController(c echo.Context) error {
+	userInput := new(models.User)
+	if err := c.Bind(userInput); err != nil {
+		return err
+	}
+
+	token, err := database.LoginUser(*userInput)
+	if err != nil {
+		return err
+	}
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"message": "login success",
+		"data":    token,
 	})
 }

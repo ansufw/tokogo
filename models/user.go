@@ -13,4 +13,6 @@ type User struct {
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 	FirstName string
 	LastName  string
+	Email     string
+	Password  string
 }
